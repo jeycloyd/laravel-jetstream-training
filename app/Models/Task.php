@@ -9,4 +9,9 @@ use Illuminate\Database\Eloquent\softdeletes;
 class Task extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $appends = ['status_string'];
+
+    public function getStatusStringAttribute(){
+        return $this->status == 1 ? 'Active' : 'Inactive';
+    }
 }
