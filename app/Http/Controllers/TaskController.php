@@ -42,11 +42,13 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        // $validation = $request->validate([
-        //     'description' => 'required',
-        //     'status'=> 'required',
-        //     'assignee'=> 'required'
-        // ]);
+        $validation = $request->validate([
+            'description' => 'required',
+            'status'=> 'required',
+            'assignee'=> 'required'
+        ]);
+        $validation->validate();
+        
         $task = new Task();
         $task->description = $request->description;
         $task->status = $request->status == 'Active' ? 1 : 0;
@@ -91,7 +93,14 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   
+        $validation = $request->validate([
+            'description' => 'required',
+            'status'=> 'required',
+            'assignee'=> 'required'
+        ]);
+        $validation->validate();
+
         $task = Task::find($id);
         $task->description = $request->description;
         $task->status = $request->status;
@@ -111,6 +120,9 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $task = Task::find($id);
+        $task->delete();
+        request()->session()->flash('flash.banner', 'Successfully Deleted Task');
+        return back();
     }
 }

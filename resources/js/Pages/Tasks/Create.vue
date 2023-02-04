@@ -62,7 +62,7 @@
                     class="mt-1 block w-full"
                     autocomplete="description"
                 />
-                <InputError :message="form.errors.description" class="mt-2" />
+                <InputError :message="$attrs.errors.description" class="mt-2" />
             </div>
 
             <div class="col-span-6 sm:col-span-4">
@@ -74,7 +74,7 @@
                     class="mt-1 block w-full"
                     autocomplete="status"
                 />
-                <InputError :message="form.errors.status" class="mt-2" />
+                <InputError :message="$attrs.errors.status" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="assignee" value="Assignee" />
@@ -85,7 +85,7 @@
                     class="mt-1 block w-full"
                     autocomplete="assignee"
                 />
-                <InputError :message="form.errors.assignee" class="mt-2" />
+                <InputError :message="$attrs.errors.assignee" class="mt-2" />
             </div>
             
 

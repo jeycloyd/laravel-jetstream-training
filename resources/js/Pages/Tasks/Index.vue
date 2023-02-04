@@ -30,7 +30,7 @@
                                 <SecondaryButton @click="editTask(task.id)">
                                     Edit
                                 </SecondaryButton>
-                                <DangerButton @click="showDeleteDialog">
+                                <DangerButton @click="showDeleteDialog(task.id)">
                                     Delete
                                 </DangerButton>
                             </div>
@@ -45,7 +45,17 @@
                 <h1>Delete Task</h1>
             </template>
             <template #content>
-                <p1>Are you sure you want to delete the task?</p1>
+                {{ 'Are you sure you want to delete this task?' }}
+            </template>
+            <template #footer>
+                <div class="flex gap-2 justify-center">
+                    <SecondaryButton @click="show_delete_dialog=false">
+                         Cancel
+                    </SecondaryButton>
+                    <DangerButton @click="deleteTask()">
+                         Delete
+                    </DangerButton>
+                </div>
             </template>
         </DialogModal>
     </AppLayout>
@@ -72,7 +82,8 @@
 
         data: function(){
             return{
-                show_delete_dialog:false
+                show_delete_dialog:false,
+                selected_id: null,
             }
         },
         methods: {
@@ -82,9 +93,18 @@
             editTask(id) {
                 this.$inertia.visit(route('tasks.edit', id),{ method : 'get' });
             },
-            showDeleteDialog() {
+            showDeleteDialog(id) {
                 this.show_delete_dialog = true;
+                this.selected_id = id;
+            },
+            deleteTask(id) {
+                this.$inertia.delete(route('tasks.destroy', this.selected_id), {
+                    onSuccess: () => {
+                        this.show_delete_dialog = false;
+                    }
+                });
             }
+
         }
     }
 </script>
